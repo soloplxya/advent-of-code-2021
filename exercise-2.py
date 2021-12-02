@@ -15,6 +15,7 @@ read_file("input-exercise2.txt")
 
 horizontal = 0 
 depth = 0 
+aim = 0
 for i in range(len(lines)): 
 
     arr = lines[i].split(" ")
@@ -22,10 +23,14 @@ for i in range(len(lines)):
     magnitude = arr[1]
     if direction == "forward": 
         horizontal += int(magnitude)
+        amount = aim*int(magnitude)
+        depth += amount
     if direction == "up":
-        depth = depth - int(magnitude) 
+        # depth -= int(magnitude) 
+        aim -= int(magnitude)
     if direction == "down":
-        depth = depth + int(magnitude)
+        # depth += int(magnitude)
+        aim += int(magnitude)
 
 print("Horizontal:{0}, Depth:{1}".format(horizontal, depth))
 result = horizontal * depth 
