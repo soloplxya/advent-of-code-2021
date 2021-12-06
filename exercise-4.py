@@ -22,6 +22,16 @@ class Board:
         self.elements = elements 
         self.seq = seq # use the sequence number to identify the boards 
 
+    def get_score(self, bingo_number): 
+        unmarked = 0 
+        for i in range(len(self.elements)): 
+            for j in range(len(self.elements[0])): 
+                if self.elements[i][j].boolean == False: 
+                    unmarked += self.elements[i][j].value 
+        return unmarked*bingo_number 
+
+        
+
 # Board class will contain the Board values 
 class Board_value: 
     
@@ -39,26 +49,25 @@ class Board_value:
     def set_boolean(self, new_boolean): 
         self.boolean = new_boolean
 
+   
+
 
 inputs = lines[0].split(",")
-print(inputs)
+# print(inputs)
 seq = 0 
 for i in range(2,len(lines),6): 
     arr = [] 
     for j in range(5): 
-        value = lines[i+j].split(" ")
-        print(value)
-
+       
+        row = lines[i+j].split(" ")
         # removing the newline 
         res = []
-        for sub in value:
+        for sub in row:
             res.append(re.sub('\n', '', sub))   
-
-        value = res
-        
-        for index in range(5): 
-            # print(value[index])
-            arr.append(Board_value(value[index], False, i+j))
+        row = res
+        row = [Board_value(item, False, i+j) for item in row]
+        arr.append(row)
+        #print(len(arr))
    
     
     board_arr.append(Board(arr, seq))
@@ -69,11 +78,49 @@ for i in range(2,len(lines),6):
 for i in range(len(inputs)):
     for j in range(len(board_arr)): 
         Board = board_arr[j]
+        
+        
+        for r in range(5): 
+            # print(Board.elements[k][a].value)
+            for c in range(5):
+                print(Board.elements[r][c].value)
+                if inputs[i] == Board.elements[r][c].value: 
+                    Board.elements[r][c].boolean = True
+          
+            
+# time to check for bingo 
+for i in range(len(board_arr)): 
+    board = board_arr[i]
+    bingo = True 
+    
 
-        for k in range(5): 
-            # print(Board.elements[k].value)
-            if inputs[i] == Board.elements[k].value: 
-                Board.elements[k].boolean = True
+    # fixed row 
+    row = 0
+    for c in range(len(board.elements[0])): 
+        if board.elements[row][c].boolean == True: 
+            bingo = bingo & True 
+        else: 
+            bingo = bingo & False 
+        row += 1 
+
+
+
+    # fixed col 
+    col = 0
+    for r in range(len(board)): 
+        if board.elements[r][col].boolean == True: 
+            bingo = bingo & True 
+        else: 
+            bingo = bingo & False 
+        col += 1 
+
+
+    print(bingo)
+
+        
+
+
+
             
             
 
