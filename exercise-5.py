@@ -51,10 +51,8 @@ def get_XY(line):
 
 
 def is_diagonal(start_X, start_Y, end_X, end_Y): 
-    if start_X == start_Y & end_X == end_Y:
+    if abs(start_X - end_X) == abs(start_Y - end_Y):
         return True 
-    elif start_X == end_Y & start_Y == end_X: 
-        return True
     else: 
         return False
 
@@ -119,22 +117,13 @@ for i in range(len(lines)):
         
         if is_diagonal(start_X, start_Y, end_X, end_Y): 
             # case 1 the centre diagonal 
-            if start_X == start_Y & end_X == end_Y:
-                difference = get_difference(start_X, end_X)
-                for j in range(difference + 1): 
-                    if start_X > end_X: 
-                        two_dimen_arr[start_X - j][start_Y - j] += 1
-                    else: 
-                        two_dimen_arr[start_X + j][start_Y + j] += 1
-            # case 2 not centre diagonal 
-            else: 
-                difference = get_difference(start_X, start_Y)
-                for j in range(difference + 1): 
-                    if start_X > start_Y: 
-                        two_dimen_arr[start_X - j][start_Y + j] += 1
-                    else: 
-                        two_dimen_arr[start_X + j][start_Y - j] += 1
-
+            difference = get_difference(start_X, start_Y)
+            for j in range(difference + 1): 
+                if start_X > end_X: 
+                    two_dimen_arr[start_X - j][start_Y + j] += 1
+                else: 
+                    two_dimen_arr[start_X + j][start_Y - j] += 1
+            
 
 
 
